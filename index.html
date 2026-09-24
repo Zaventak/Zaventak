@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zaventak</title>
+  <title>Zaventak — Digital Studio</title>
 
   <style>
     * {
@@ -12,58 +12,626 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #0f0f12;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(87, 70, 255, 0.18), transparent 30%),
+        radial-gradient(circle at 80% 10%, rgba(255, 92, 188, 0.12), transparent 30%),
+        #0a0a0d;
       color: white;
-      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(10, 10, 13, 0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      height: 72px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 24px;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #cfcfd7;
+      font-size: 0.95rem;
+    }
+
+    .nav-cta {
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 10px 16px;
+      border-radius: 999px;
     }
 
     .hero {
-      max-width: 900px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 0 80px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #bdbdc8;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: #8c7cff;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #8c7cff;
     }
 
     h1 {
-      font-size: clamp(3rem, 8vw, 7rem);
-      letter-spacing: -0.05em;
-      margin-bottom: 20px;
+      font-size: clamp(4rem, 9vw, 8.5rem);
+      line-height: 0.88;
+      letter-spacing: -0.075em;
+      max-width: 900px;
     }
 
-    p {
-      font-size: 1.2rem;
+    .gradient-word {
+      background: linear-gradient(90deg, #ffffff, #aaa2ff, #ff9ed2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-copy {
+      margin-top: 28px;
+      color: #aaaab5;
+      font-size: 1.15rem;
       line-height: 1.7;
-      color: #b8b8c2;
-      max-width: 650px;
-      margin: 0 auto 32px;
+      max-width: 680px;
     }
 
-    .button {
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
       display: inline-block;
-      padding: 14px 24px;
+      text-decoration: none;
+      padding: 14px 22px;
       border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
       background: white;
       color: #111;
-      text-decoration: none;
-      font-weight: bold;
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+    }
+
+    .hero-card {
+      min-height: 470px;
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(4px);
+      opacity: 0.9;
+    }
+
+    .orb.one {
+      width: 220px;
+      height: 220px;
+      background: #7968ff;
+      top: 40px;
+      right: -30px;
+      box-shadow: 0 0 90px rgba(121,104,255,0.5);
+    }
+
+    .orb.two {
+      width: 160px;
+      height: 160px;
+      background: #ff71bf;
+      bottom: 50px;
+      left: -20px;
+      box-shadow: 0 0 90px rgba(255,113,191,0.35);
+    }
+
+    .glass-card {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      bottom: 38px;
+      padding: 24px;
+      border-radius: 22px;
+      background: rgba(15,15,20,0.58);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .glass-card small {
+      color: #a8a8b2;
+    }
+
+    .glass-card h3 {
+      margin-top: 8px;
+      font-size: 1.65rem;
+      letter-spacing: -0.03em;
+    }
+
+    section {
+      padding: 110px 0;
+    }
+
+    .section-label {
+      color: #8d8d98;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: clamp(2.6rem, 5vw, 5rem);
+      letter-spacing: -0.055em;
+      line-height: 1;
+      max-width: 900px;
+    }
+
+    .services-grid {
+      margin-top: 50px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 30px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.035);
+      min-height: 260px;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .card-number {
+      color: #73737d;
+      font-size: 0.9rem;
+      margin-bottom: 70px;
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #9e9eaa;
+      line-height: 1.65;
+    }
+
+    .work-grid {
+      margin-top: 50px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+    }
+
+    .work-card {
+      border-radius: 28px;
+      min-height: 420px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
+      background:
+        linear-gradient(135deg, rgba(96,75,255,0.35), rgba(255,92,188,0.18)),
+        #131318;
+    }
+
+    .work-card.secondary {
+      background:
+        linear-gradient(135deg, rgba(32,190,160,0.22), rgba(20,20,24,1));
+    }
+
+    .work-info {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 28px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.72));
+    }
+
+    .work-info h3 {
+      font-size: 2rem;
+      letter-spacing: -0.04em;
+    }
+
+    .work-info p {
+      color: #b7b7c1;
+      margin-top: 8px;
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 70px;
+      align-items: start;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+    }
+
+    .step span {
+      color: #74747f;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+      font-size: 1.35rem;
+    }
+
+    .step p {
+      color: #9d9da7;
+      line-height: 1.6;
+    }
+
+    .cta {
+      padding: 100px 0 120px;
+    }
+
+    .cta-box {
+      padding: 70px;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(255,108,195,0.28), transparent 35%),
+        radial-gradient(circle at 10% 90%, rgba(102,86,255,0.38), transparent 35%),
+        #15151b;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .cta-box h2 {
+      font-size: clamp(3rem, 6vw, 6rem);
+      letter-spacing: -0.06em;
+      line-height: 0.95;
+      max-width: 850px;
+    }
+
+    .cta-box p {
+      margin-top: 22px;
+      color: #b2b2bc;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 30px 0 50px;
+      color: #777782;
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .work-grid,
+      .process {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: 380px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links a:not(.nav-cta) {
+        display: none;
+      }
+
+      .cta-box {
+        padding: 40px 26px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <main class="hero">
-    <h1>Zaventak</h1>
 
-    <p>
-      We design modern, high-converting websites and digital experiences
-      powered by creativity, strategy, and AI.
-    </p>
+  <nav>
+    <div class="container nav-inner">
+      <div class="logo">Zaventak</div>
 
-    <a class="button" href="#">Start a Project</a>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a class="nav-cta" href="#contact">Start a Project</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <div>
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Independent digital studio
+          </div>
+
+          <h1>
+            Websites that feel
+            <span class="gradient-word">impossible to ignore.</span>
+          </h1>
+
+          <p class="hero-copy">
+            Zaventak creates high-impact websites, digital experiences,
+            and AI-powered systems for ambitious brands that want to look
+            sharper, move faster, and stand apart.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Start a Project</a>
+            <a class="btn btn-secondary" href="#work">View Work</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="orb one"></div>
+          <div class="orb two"></div>
+
+          <div class="glass-card">
+            <small>Selected focus</small>
+            <h3>Design. Strategy. AI.</h3>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+
+        <div class="section-label">What we do</div>
+
+        <h2 class="section-title">
+          Digital work built to perform, not just decorate.
+        </h2>
+
+        <div class="services-grid">
+
+          <div class="card">
+            <div class="card-number">01</div>
+            <h3>Website Design</h3>
+            <p>
+              Premium, modern websites crafted around your brand,
+              audience, and business goals.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-number">02</div>
+            <h3>Development</h3>
+            <p>
+              Fast, responsive, polished builds designed to work smoothly
+              across desktop, tablet, and mobile.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-number">03</div>
+            <h3>AI Systems</h3>
+            <p>
+              Intelligent workflows, automation, and AI-powered tools
+              that help businesses move faster.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="container">
+
+        <div class="section-label">Selected work</div>
+
+        <h2 class="section-title">
+          Built to make people stop scrolling.
+        </h2>
+
+        <div class="work-grid">
+
+          <div class="work-card">
+            <div class="work-info">
+              <h3>Brand Experience</h3>
+              <p>Concept website · Art direction · Digital identity</p>
+            </div>
+          </div>
+
+          <div class="work-card secondary">
+            <div class="work-info">
+              <h3>AI Product</h3>
+              <p>Product design · UX · Automation</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="container process">
+
+        <div>
+          <div class="section-label">How we work</div>
+          <h2 class="section-title">Simple process. Strong result.</h2>
+        </div>
+
+        <div class="steps">
+
+          <div class="step">
+            <span>01</span>
+            <div>
+              <h3>Discover</h3>
+              <p>
+                We learn the business, audience, goals, and competitive landscape.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <span>02</span>
+            <div>
+              <h3>Design</h3>
+              <p>
+                We define the visual direction and turn the concept into a clear experience.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <span>03</span>
+            <div>
+              <h3>Build</h3>
+              <p>
+                We develop, refine, test, and polish the experience for launch.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <span>04</span>
+            <div>
+              <h3>Launch</h3>
+              <p>
+                The site goes live, ready for customers instead of collecting digital dust.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="cta">
+      <div class="container">
+
+        <div class="cta-box">
+          <h2>
+            Have something worth building?
+          </h2>
+
+          <p>
+            Tell us what you're working on. We'll help turn the idea into a digital experience
+            that looks sharp and works hard.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:hello@zaventak.com">
+              Start a Project
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 Zaventak</div>
+      <div>Digital studio · Miami / Worldwide</div>
+    </div>
+  </footer>
+
 </body>
 </html>
